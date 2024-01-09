@@ -18,7 +18,7 @@ Require the `stas-plov/dto-validator-bundle` package in your composer.json and u
 composer require stas-plov/dto-validator-bundle
 ```
 
-Flex, you'll need to enable it manually as explained [in the docs][2].
+Flex, you'll need to enable it manually as explained [in the docs][1].
 
 ## Usage
 

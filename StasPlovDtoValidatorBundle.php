@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * @author Stas Plov <SaviouR.S@mail.ru>
  */
-class DtoValidatorBundle extends Bundle
+class StasPlovDtoValidatorBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {

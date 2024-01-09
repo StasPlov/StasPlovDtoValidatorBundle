@@ -1,11 +1,7 @@
 StasPlovDtoValidatorBundle
 ================
 
-The StasPlovDtoValidatorBundle allows you to send `Cross-Origin Resource Sharing`_
-headers with ACL-style per-URL configuration.
-
-If you need it, check `this flow chart image`_ to have a global overview of
-entire CORS workflow.
+The StasPlovDtoValidatorBundle Validating the Request by DTO in the context of symfony.
 
 Installation
 ------------

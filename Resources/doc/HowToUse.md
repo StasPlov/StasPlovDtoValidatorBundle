@@ -40,18 +40,18 @@ class CreateDto extends DtoAbstract implements DtoInterface {
 
 	#[Validator\Uuid]
 	#[Validator\Length(min: 36, max: 36)]
-    private string $id;
+	private string $id;
 	
 	#[Validator\NotBlank]
 	#[Validator\NotNull]
 	#[Validator\Length(min: 1, max: 180)]
-    private string $username;
+	private string $username;
 
 	#[Validator\NotBlank]
 	#[Validator\NotNull]
 	#[Validator\Email(mode: Email::VALIDATION_MODE_STRICT)]
 	#[Validator\Length(min: 1, max: 255)]
-    private string $mail;
+	private string $mail;
 
 	#[Validator\NotBlank]
 	#[Validator\NotNull]

@@ -11,8 +11,6 @@
 
 namespace StasPlov\DtoValidatorBundle\Service\Dto;
 
-use StasPlov\DtoValidatorBundle\Service\DtoInterface\DtoInterface;
-
 /**
  * @author Stas Plov <SaviouR.S@email.ru>
  * 

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace StasPlov\DtoValidatorBundle\Service\DtoInterface;
+namespace StasPlov\DtoValidatorBundle\Service\Dto;
 
 /**
  * @author Stas Plov <SaviouR.S@email.ru>

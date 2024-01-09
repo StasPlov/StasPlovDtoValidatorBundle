@@ -29,7 +29,7 @@ class RequestDecoder implements RequestDecoderInterface {
      * @param Request $request
      * @return array
      */
-	private function decode(Request $request): array {
+	public function decode(Request $request): array {
 		$params = [];
 
 		if($request->getMethod() == Request::METHOD_GET) {

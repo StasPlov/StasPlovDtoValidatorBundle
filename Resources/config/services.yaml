@@ -1,13 +1,10 @@
-container:
-  parameters:
-    stas_plov_dto_validator_bundle.controller_listener.class: StasPlov\DtoValidatorBundle\EventListener\ControllerListener
-  services:
-    # default realization for RequestDecoderInterface
-    StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoder: ~
-    StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoderInterface: '@StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoder'
+services:
+  # default realization for RequestDecoderInterface
+  StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoder: ~
+  StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoderInterface: '@StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoder'
 
-    stas_plov_dto_validator_bundle.controller_listener:
-      class: '@stas_plov_dto_validator_bundle.controller_listener.class'
-      tags:
-        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-        #- { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+  stas_plov_dto_validator_bundle.controller_listener:
+    class: 'StasPlov\DtoValidatorBundle\EventListener\ControllerListener'
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+      #- { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

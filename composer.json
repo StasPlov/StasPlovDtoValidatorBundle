@@ -23,7 +23,7 @@
         "symfony/phpunit-bridge": "^5.4 || ^6.0 || ^7.0"
     },
     "autoload": {
-        "psr-4": { "StasPlov\\CorsBundle\\": "" },
+        "psr-4": { "StasPlov\\DtoValidatorBundle\\": "" },
         "exclude-from-classmap": ["/Tests/"]
     },
     "extra": {

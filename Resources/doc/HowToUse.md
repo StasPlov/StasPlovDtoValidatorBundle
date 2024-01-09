@@ -34,7 +34,6 @@ namespace App\Dto\User;
 use StasPlov\DtoValidatorBundle\Service\Dto\DtoAbstract;
 use StasPlov\DtoValidatorBundle\Service\Dto\DtoInterface;
 use Symfony\Component\Validator\Constraints as Validator;
-use Symfony\Component\Validator\Constraints\Email;
 
 class CreateDto extends DtoAbstract implements DtoInterface {
 

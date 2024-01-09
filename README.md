@@ -1,3 +1,9 @@
+[![Minimum PHP version: 8.2.0](https://img.shields.io/badge/php-8.2.0%2B-blue.svg)](https://packagist.org/packages/infection/infection)
+[![Latest Stable Version](http://poser.pugx.org/stas-plov/dto-validator-bundle/v)](https://packagist.org/packages/stas-plov/dto-validator-bundle) 
+[![Total Downloads](http://poser.pugx.org/stas-plov/dto-validator-bundle/downloads)](https://packagist.org/packages/stas-plov/dto-validator-bundle) 
+[![Latest Unstable Version](http://poser.pugx.org/stas-plov/dto-validator-bundle/v/unstable)](https://packagist.org/packages/stas-plov/dto-validator-bundle) 
+[![License](http://poser.pugx.org/stas-plov/dto-validator-bundle/license)](https://packagist.org/packages/stas-plov/dto-validator-bundle) 
+
 # StasPlovDtoValidatorBundle
 
 ## About 

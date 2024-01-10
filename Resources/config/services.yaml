@@ -6,5 +6,9 @@ services:
   stas_plov_dto_validator_bundle.controller_listener:
     class: 'StasPlov\DtoValidatorBundle\EventListener\ControllerListener'
     tags:
-      - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+      - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 250 }
       #- { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+    arguments:
+      $logger: '@logger'
+      $requestDecoder: '@?StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoder'
+      $validator: '@?validator'

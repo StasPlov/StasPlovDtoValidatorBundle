@@ -8,7 +8,21 @@
 
 ## About 
 
-The StasPlovDtoValidatorBundle Validating the Request by DTO in the context of symfony
+The StasPlovDtoValidatorBundle Validating the Request by DTO in the context of symfony.
+
+The core idea of StasPlovDtoValidatorBundle is to validate input data in the controller from the Request
+using so-called DTO (Data Transfer Object) entities.
+
+
+```php
+#[ValidateDto(data: 'createDto', class: CreateDto::class)]
+#[Route(path: '/create/user', name: 'api-user-create', methods: ['POST'])]
+public function createUser(CreateDto $createDto): Response {
+	// ... some code
+}
+```
+
+The `$createDto` variable will contain all the data described in the corresponding `CreateDto` class.
 
 ## Installation
 

@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 /**
- * @author Stas Plov <SaviouR.S@email.ru>
+ * @author Stas Plov <SaviouR.S@mail.ru>
  * 
  * [RFC-2616] — GET uri, POST body https://www.rfc-editor.org/rfc/rfc2616#section-4.3
  */

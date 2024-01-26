@@ -11,26 +11,23 @@
 
 namespace StasPlov\DtoValidatorBundle\EventListener;
 
+use ReflectionClass;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use ReflectionAttribute;
-use ReflectionMethod;
-use ReflectionObject;
 use StasPlov\DtoValidatorBundle\Annotation\ValidateDto;
 use StasPlov\DtoValidatorBundle\Exception\ValidateException;
 use StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoder;
 use StasPlov\DtoValidatorBundle\RequestDecoder\RequestDecoderInterface;
+use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * Add Validate for DTO Object fron controller method
  *
  * @author Stas Plov <SaviouR.S@mail.ru>
  */
-class ControllerListener
-{
+class ControllerListener {
 	/**
 	 * @var LoggerInterface
 	 */
@@ -45,6 +42,9 @@ class ControllerListener
 	 * @var ValidatorInterface
 	 */
 	private $validator;
+
+	private const CONTROLLER_ERROR = 'error_controller';
+	private const REQUEST_CONTROLLER_FIELD = '_controller';
 
 	public function __construct(
 		?LoggerInterface $logger = null,
@@ -71,57 +71,57 @@ class ControllerListener
 	/**
 	 * Kernel Controller function
 	 *
-	 * @param ControllerEvent $event
+	 * @param ControllerArgumentsEvent $event
 	 * 
 	 * @return void
 	 */
-	public function onKernelController(ControllerEvent $event) {
+	public function onKernelController(ControllerArgumentsEvent $event) {
 		if (!$event->isMainRequest()) {
 			return;
 		}
 
-		/**
-		 * @var callable $controller
-		 */
-		$controller = (is_array($event->getController()) ? ((array)$event->getController())[0] : $event->getController());
 		$request = $event->getRequest();
+		$methodArgs = $event->getNamedArguments();
 
-		$explodeController = explode('::', $request->get('_controller'));
-		$requestMethodName = $explodeController[
-			count($explodeController) - 1
-		];
-
-		if ($requestMethodName == 'error_controller') { // exit for base exception
+		# if not set some args return
+		if ($methodArgs === []) {
 			return;
 		}
 
-		$reflectionObject = new ReflectionObject((object) $controller);
-		$reflectionMethod = $reflectionObject->getMethod($requestMethodName);
+		$explodeController = explode('::', $request->get(self::REQUEST_CONTROLLER_FIELD));
+		$requestMethodName = $explodeController[count($explodeController) - 1];
 
-		$attribute = $this->attributeHandler($reflectionMethod, ValidateDto::class);
-
-		if (!isset($attribute)) { // if not validation attribute
+		if ($requestMethodName === self::CONTROLLER_ERROR) { // exit for base exception
 			return;
 		}
 
-		$args = $attribute->getArguments(); #some need check empty args
-
 		/**
-		 * @var string
+		 * @var ValidateDto|null $attribute
 		 */
-		$parameterName = $args['data'];
+		$attribute = $event->getAttributes()[ValidateDto::class][0] ?? null;
 
-		/**
-		 * @var object
-		 */
-		$data = $this->requestDecoder->decodeDto($request, $args['class']);
+		# if haven`t attribute
+		if ($attribute === null) {
+			return;
+		}
 
-		$this->validate($data); // validate
+		$parameterDtoClass = $attribute->getClass();
+		$parameterName = (new ReflectionClass($parameterDtoClass))->getShortName();
 
-		$event->setController(
-			static function () use ($reflectionMethod, $controller, $parameterName, $data) {
-				return $reflectionMethod->invokeArgs((object) $controller, [$parameterName => $data]);
+		# decode dto
+		$data = $this->requestDecoder->decodeDto($request, $parameterDtoClass);
+
+		# validate dto
+		$this->validate($data); 
+
+		foreach ($methodArgs as $key => $item) {
+			if (strcasecmp($key, $parameterName) === 0) {
+				$methodArgs[$key] = $data;
 			}
+		}
+
+		$event->setArguments(
+			$methodArgs
 		);
 	}
 
@@ -132,14 +132,16 @@ class ControllerListener
 	 * 
 	 * @return void
 	 */
-	protected function validate(object $data): void {
+	private function validate(object $data): void {
 		if (!$data) {
-			throw new ValidateException('Invalid JSON format');
+			throw new ValidateException(
+				json_encode(['errors' => 'Invalid data format'])
+			);
 		}
 
 		$errors = $this->validator->validate($data);
 
-		if (count($errors) > 0) {
+		if ($errors->count()) {
 			$errorMessages = [];
 
 			foreach ($errors as $error) {
@@ -149,54 +151,9 @@ class ControllerListener
 				];
 			}
 
-			throw new ValidateException(json_encode(['errors' => $errorMessages]));
+			throw new ValidateException(
+				json_encode(['errors' => $errorMessages])
+			);
 		}
-	}
-
-	/**
-	 * Get Method Parameter List
-	 * 
-	 * @param ReflectionMethod $method
-	 * 
-	 * @return array
-	 */
-	protected function getMethodParameterList(ReflectionMethod $method): array {
-		$result = [];
-
-		foreach ($method->getParameters() as $parameter) {
-			if (!array_key_exists($parameter->getType()->getName(), $result)) {
-				//$result = [...$result, $parameter->getName()];
-				$result = [
-					...$result,
-					$parameter->getName() => $parameter->getType()->getName()
-				];
-			}
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Get ValidateDto attribute from method
-	 *
-	 * @param ReflectionMethod $method
-	 * @param string $annotationClass
-	 * 
-	 * @return ReflectionAttribute|null
-	 */
-	protected function attributeHandler(ReflectionMethod $method, string $annotationClass): ?ReflectionAttribute {
-		/** 
-		 * @var array<ReflectionAttribute>
-		 */
-		$result = array_filter(
-			$method->getAttributes(),
-			static fn($i) => $i->getName() === $annotationClass
-		);
-
-		if ($result === []) {
-			return null;
-		}
-
-		return $result[0];
 	}
 }

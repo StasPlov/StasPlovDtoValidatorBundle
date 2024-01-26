@@ -1,5 +1,6 @@
 {
     "name": "stas-plov/dto-validator-bundle",
+	"version": "v1.1.2",
 	"type": "symfony-bundle",
     "description": "Adds validator for middleware request support in your Symfony application",
     "keywords": ["Symfony", "bundle", "dto", "validator", "validate", "api", "rest"],

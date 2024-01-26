@@ -10,17 +10,42 @@
  */
 
 namespace StasPlov\DtoValidatorBundle\Service\Dto;
+use Symfony\Component\Validator\Constraints as Validator;
 
 /**
- * @author Stas Plov <SaviouR.S@email.ru>
+ * @author Stas Plov <SaviouR.S@mail.ru>
  * 
  */
 abstract class DtoAbstract implements DtoInterface {
+
+	#[Validator\Type('int')]
+	#[Validator\Positive()]
 	public int $_limit = 25;
+
+	#[Validator\Type('int')]
+	#[Validator\PositiveOrZero()]
 	public int $_offset = 0;
+
+	#[Validator\Type('string')]
+	#[Validator\Regex(
+		pattern: DtoPattern::REGEX_TEXT_WITH_DOTS_NO_SPACES, 
+		message: 'The string can only contain letters, spaces, and periods.'
+	)]
 	public string $_sortBy = '';
+
+	#[Validator\Type('string')]
+	#[Validator\Regex(
+		pattern: DtoPattern::REGEX_TEXT_WITH_DOTS_NO_SPACES, 
+		message: 'The string can only contain letters, spaces, and periods.'
+	)]
 	public string $_orderBy = '';
+
+	#[Validator\Type('bool')]
+	#[Validator\PositiveOrZero()]
 	public bool $_count = false;
+
+	#[Validator\Type('bool')]
+	#[Validator\PositiveOrZero()]
 	public bool $_nolimit = false;
 
 	/**

@@ -22,6 +22,11 @@ use Symfony\Component\DependencyInjection\Attribute\Target;
  */
 #[Attribute(Attribute::TARGET_METHOD)]
 class ValidateDto {
+	/**
+	 * deprecated since v1.1.2
+	 * use only $class variable
+	 * @deprecated 
+	 */
 	public string $data;
     public string $class;
 
@@ -32,4 +37,13 @@ class ValidateDto {
 		$this->data = $data;
 		$this->class = $class;
 	}
+
+    /**
+     * Get class variable
+     *
+     * @return string
+     */
+    public function getClass(): string {
+        return $this->class;
+    }
 }

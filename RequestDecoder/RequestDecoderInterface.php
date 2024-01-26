@@ -14,7 +14,7 @@ namespace StasPlov\DtoValidatorBundle\RequestDecoder;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @author Stas Plov <SaviouR.S@email.ru>
+ * @author Stas Plov <SaviouR.S@mail.ru>
  * 
  * [RFC-2616] — GET uri, POST body https://www.rfc-editor.org/rfc/rfc2616#section-4.3
  */

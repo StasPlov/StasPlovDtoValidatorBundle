@@ -91,7 +91,8 @@ class ControllerListener {
 		$explodeController = explode('::', $request->get(self::REQUEST_CONTROLLER_FIELD));
 		$requestMethodName = $explodeController[count($explodeController) - 1];
 
-		if ($requestMethodName === self::CONTROLLER_ERROR) { // exit for base exception
+		# exit for base exception
+		if ($requestMethodName === self::CONTROLLER_ERROR) {
 			return;
 		}
 

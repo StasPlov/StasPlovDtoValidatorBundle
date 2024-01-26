@@ -15,7 +15,7 @@ using so-called DTO (Data Transfer Object) entities.
 
 
 ```php
-#[ValidateDto(data: 'createDto', class: CreateDto::class)]
+#[ValidateDto(class: CreateDto::class)]
 #[Route(path: '/create/user', name: 'api-user-create', methods: ['POST'])]
 public function createUser(CreateDto $createDto): Response {
 	// ... some code

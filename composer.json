@@ -20,7 +20,8 @@
 		"symfony/http-foundation": "^6.0|^7.0",
         "symfony/http-kernel": "^6.0|^7.0",
 		"symfony/validator": "^6.0|^7.0",
-		"symfony/serializer": "^6.0|^7.0"
+		"symfony/serializer": "^6.0|^7.0",
+        "symfony/property-info": "^6.0|^7.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.4 || ^6.0 || ^7.0"

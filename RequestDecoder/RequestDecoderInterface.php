@@ -30,7 +30,6 @@ interface RequestDecoderInterface {
      */
 	public function decode(Request $request): array;
 
-
  	/**
 	 * Decode Request params for DTO object class
 	 * 
